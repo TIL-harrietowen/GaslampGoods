@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: gaslamp_goods
+    database: til_us
+    schema: gaslamp_goods
+    tables:
+      - name: customers
+      - name: orders
+      - name: items
+      - name: products
+      - name: payment 
+      - name: stores
+      - name: supplies 
