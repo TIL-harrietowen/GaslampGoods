@@ -1,0 +1,84 @@
+semantic_models:
+  - name: order_items
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order items fact table. This table is at the order-item grain.
+    model: ref('fct_order_items')
+
+    entities:
+      - name: order_item_id
+        type: primary
+      - name: order
+        type: foreign
+        expr: order_id
+      - name: product
+        type: foreign
+        expr: product_id
+
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc('day', ordered_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: product_name
+        type: categorical
+      - name: product_type
+        type: categorical
+      - name: is_food_and_drink
+        type: categorical
+      - name: is_lifestyle_and_goods
+        type: categorical
+
+    measures:
+      - name: order_item_count
+        expr: 1
+        agg: sum
+      - name: total_revenue
+        expr: product_price
+        agg: sum
+      - name: total_supply_cost
+        expr: supply_cost
+        agg: sum
+
+metrics:
+  - name: order_item_count
+    description: "Total number of order items"
+    type: simple
+    label: "Order Item Count"
+    type_params:
+      measure: order_item_count
+  - name: total_revenue
+    description: "Total revenue from order items"
+    type: simple
+    label: "Total Revenue"
+    type_params:
+      measure: total_revenue
+  - name: food_and_drink_order_revenue
+    description: "Revenue from food and drink orders"
+    type: simple
+    label: "Food and Drink Order Revenue"
+    type_params:
+      measure: total_revenue
+    filter: |
+      {{ Dimension('is_food_and_drink') }} = True
+  - name: lifestyle_and_goods_order_revenue
+    description: "Revenue from lifestyle and goods orders"
+    type: simple
+    label: "Lifestyle and Goods Revenue"
+    type_params:
+      measure: total_revenue
+    filter: |
+      {{ Dimension('is_lifestyle_and_goods') }} = True
+  - name: gross_profit
+    description: "Gross profit from orders"
+    type: derived
+    label: "Gross Profit"
+    type_params:
+      expr: revenue - cost
+      metrics:
+        - name: total_revenue
+          alias: revenue
+        - name: total_supply_cost
+          alias: cost
