@@ -14,7 +14,7 @@ renamed as (
         id as customer_id,
 
         ---------- properties
-        name
+        name as customer_name
 
     from source
 

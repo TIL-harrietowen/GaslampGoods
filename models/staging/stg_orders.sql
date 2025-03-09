@@ -1,10 +1,3 @@
-{{
-    config(
-        materialized = 'table',
-        unique_key = 'order_id'
-    )
-}}
-
 with
 
 source as (
@@ -22,13 +15,13 @@ renamed as (
         store_id as location_id,
         customer as customer_id,
 
+        ---------- timestamps
+        ordered_at,
+
         ---------- properties
         order_total,
         tax_paid,
-        subtotal,
-
-        ---------- timestamps
-        ordered_at
+        subtotal
 
     from source
 
