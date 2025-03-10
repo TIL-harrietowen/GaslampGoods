@@ -5,6 +5,11 @@ order_items as (
     select * from {{ ref('stg_order_items') }}
 ),
 
+orders as (
+    
+    select * from {{ ref('stg_orders')}}
+),
+
 products as (
 
     select * from {{ ref('stg_products') }}
@@ -27,11 +32,15 @@ joined as (
         products.product_price,
         products.is_lifestyle_and_goods,
         products.is_food_and_drink,
-        supplies.supply_cost
+        supplies.supply_cost,
+        orders.ordered_at
 
     from order_items
 
+    left join orders on order_items.order_id  = orders.order_id
+
     left join products on order_items.product_id = products.product_id
+    
     left join supplies on order_items.product_id = supplies.product_id
 
 )

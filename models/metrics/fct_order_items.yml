@@ -26,6 +26,8 @@ semantic_models:
         type: categorical
       - name: product_type
         type: categorical
+      - name: product_description
+        type: categorical
       - name: is_food_and_drink
         type: categorical
       - name: is_lifestyle_and_goods
@@ -35,7 +37,7 @@ semantic_models:
       - name: order_item_count
         expr: 1
         agg: sum
-      - name: total_revenue
+      - name: total_sales
         expr: product_price
         agg: sum
       - name: total_supply_cost
@@ -43,42 +45,56 @@ semantic_models:
         agg: sum
 
 metrics:
+  
+  #SIMPLE
   - name: order_item_count
     description: "Total number of order items"
     type: simple
     label: "Order Item Count"
     type_params:
       measure: order_item_count
-  - name: total_revenue
-    description: "Total revenue from order items"
+
+  - name: total_sales
+    description: "Total sales from order items"
     type: simple
-    label: "Total Revenue"
+    label: "Total Sales"
     type_params:
-      measure: total_revenue
-  - name: food_and_drink_order_revenue
-    description: "Revenue from food and drink orders"
+      measure: total_sales
+
+  - name: total_supply_cost
+    description: "Total supply cost from order items"
     type: simple
-    label: "Food and Drink Order Revenue"
+    label: "Total Supply Cost"
     type_params:
-      measure: total_revenue
+      measure: total_supply_cost
+
+  - name: food_and_drink_order_sales
+    description: "Sales from Food and Drink Orders"
+    type: simple
+    label: "Food and Drink Order Sales"
+    type_params:
+      measure: total_sales
     filter: |
-      {{ Dimension('is_food_and_drink') }} = True
-  - name: lifestyle_and_goods_order_revenue
-    description: "Revenue from lifestyle and goods orders"
+      {{ Dimension('order__is_food_and_drink') }} = True
+
+  - name: lifestyle_and_goods_order_sales
+    description: "Sales from lifestyle and Goods Orders"
     type: simple
-    label: "Lifestyle and Goods Revenue"
+    label: "Lifestyle and Goods Sales"
     type_params:
-      measure: total_revenue
+      measure: total_sales
     filter: |
-      {{ Dimension('is_lifestyle_and_goods') }} = True
+      {{ Dimension('order__is_lifestyle_and_goods') }} = True
+  
+  #DERIVED
   - name: gross_profit
     description: "Gross profit from orders"
     type: derived
     label: "Gross Profit"
     type_params:
-      expr: revenue - cost
+      expr: sales - cost
       metrics:
-        - name: total_revenue
-          alias: revenue
+        - name: total_sales
+          alias: sales
         - name: total_supply_cost
           alias: cost
