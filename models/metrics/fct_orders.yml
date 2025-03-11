@@ -5,6 +5,7 @@ semantic_models:
     description: |
       Order fact table. This table is at the order grain with one row per order.
     model: ref('fct_orders')
+
     entities:
       - name: order_id
         type: primary
@@ -19,15 +20,14 @@ semantic_models:
         type: time
         type_params:
           time_granularity: day
-      - name: order_total_dim
-        type: categorical
-        expr: order_total
       - name: location_opened_at
         expr: date_trunc('day', location_opened_at)
         type: time
         type_params:
           time_granularity: day
       - name: customer_name
+        type: categorical
+      - name: location_name
         type: categorical
         
     measures:
@@ -65,6 +65,13 @@ metrics:
     type_params:
       measure: order_total
 
+  - name: tax_paid
+    description: "Tax paid per Order"
+    type: simple
+    label: "Tax Paid"
+    type_params:
+      measure: tax_paid
+
   - name: customers_with_orders
     description: "The number of locations that have orders."
     type: simple
@@ -100,18 +107,6 @@ metrics:
     type: cumulative
     type_params:
       measure: order_total
-
-  - name: cumulative_order_total_l1m
-    label: Cumulative order total (L1M)   
-    description: Trailing 1-month cumulative order total
-    type: cumulative
-    type_params:
-      measure: 
-        name: order_total
-        join_to_timespine: true
-        fill_nulls_with: 0
-      cumulative_type_params:
-        window: 1 month
   
   - name: cumulative_order_total_mtd
     label: Cumulative order total (MTD)

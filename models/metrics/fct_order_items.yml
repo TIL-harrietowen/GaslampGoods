@@ -5,6 +5,7 @@ semantic_models:
     description: |
       Order items fact table. This table is at the order-item grain.
     model: ref('fct_order_items')
+    
     entities:
       - name: order_item_id
         type: primary
