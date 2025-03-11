@@ -1,0 +1,96 @@
+semantic_models:
+  - name: order_items
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order items fact table. This table is at the order-item grain.
+    model: ref('fct_order_items')
+    entities:
+      - name: order_item_id
+        type: primary
+      - name: order_id
+        type: foreign
+      - name: product_id
+        type: foreign
+
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc('day', ordered_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: product_name
+        type: categorical
+      - name: product_type
+        type: categorical
+      - name: product_description
+        type: categorical
+      - name: is_food_and_drink
+        type: categorical
+      - name: is_lifestyle_and_goods
+        type: categorical
+
+    measures:
+      - name: order_item_count
+        expr: 1
+        agg: sum
+      - name: total_sales
+        expr: product_price
+        agg: sum
+      - name: total_supply_cost
+        expr: supply_cost
+        agg: sum
+
+metrics:
+  #SIMPLE
+  - name: order_item_count
+    description: "Total number of order items"
+    type: simple
+    label: "Order Item Count"
+    type_params:
+      measure: order_item_count
+
+  - name: total_sales
+    description: "Total sales from order items"
+    type: simple
+    label: "Total Sales"
+    type_params:
+      measure: total_sales
+
+  - name: total_supply_cost
+    description: "Total supply cost from order items"
+    type: simple
+    label: "Total Supply Cost"
+    type_params:
+      measure: total_supply_cost
+
+  - name: food_and_drink_order_sales
+    description: "Sales from Food and Drink Orders"
+    type: simple
+    label: "Food and Drink Order Sales"
+    type_params:
+      measure: total_sales
+    filter: |
+      {{ Dimension('order_item_id__is_food_and_drink') }} = True
+
+  - name: lifestyle_and_goods_order_sales
+    description: "Sales from lifestyle and Goods Orders"
+    type: simple
+    label: "Lifestyle and Goods Sales"
+    type_params:
+      measure: total_sales
+    filter: |
+      {{ Dimension('order_item_id__is_lifestyle_and_goods') }} = True
+
+  #DERIVED
+  - name: gross_profit
+    description: "Gross profit from orders"
+    type: derived
+    label: "Gross Profit"
+    type_params:
+      expr: sales - cost
+      metrics:
+        - name: total_sales
+          alias: sales
+        - name: total_supply_cost
+          alias: cost

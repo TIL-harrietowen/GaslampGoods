@@ -1,0 +1,125 @@
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order fact table. This table is at the order grain with one row per order.
+    model: ref('fct_orders')
+    entities:
+      - name: order_id
+        type: primary
+      - name: location_id
+        type: foreign
+      - name: customer_id
+        type: foreign
+
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc('day', ordered_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: order_total_dim
+        type: categorical
+        expr: order_total
+      - name: location_opened_at
+        expr: date_trunc('day', location_opened_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: customer_name
+        type: categorical
+        
+    measures:
+      - name: order_total
+        description: The total amount for each order including taxes.
+        agg: sum
+      - name: order_count
+        expr: 1
+        agg: sum
+      - name: tax_paid
+        description: The total tax paid on each order.
+        agg: sum
+      - name: customers_with_orders
+        description: Distinct count of customers placing orders.
+        agg: count_distinct
+        expr: customer_id
+      - name: locations_with_orders
+        description: Distinct count of locations with orders.
+        expr: location_id
+        agg: count_distinct
+      - name: max_order_value
+        expr: order_total
+        agg: max
+      - name: min_order_value
+        expr: order_total
+        agg: min
+
+metrics:
+
+  #SIMPLE
+  - name: order_total
+    description: "Sum of orders value"
+    type: simple
+    label: "Order Total"
+    type_params:
+      measure: order_total
+
+  - name: customers_with_orders
+    description: "The number of locations that have orders."
+    type: simple
+    label: "Customers with Orders"
+    type_params:
+      measure: customers_with_orders
+
+  - name: locations_with_orders
+    description: "The number of locations that have orders."
+    type: simple
+    label: "Locations with Orders"
+    type_params:
+      measure: locations_with_orders
+
+  - name: max_order_amount
+    label: "Max Order Amount"
+    description: "The highest order value for a given period"
+    type: simple
+    type_params:
+      measure: max_order_value
+
+  - name: min_order_amount
+    label: "Min Order Amount"
+    description: "The lowest order value for a given period"
+    type: simple
+    type_params:
+      measure: min_order_value
+
+  #CUMULATIVE
+  - name: cumulative_order_total
+    label: "Cumulative Order Total (All-Time)"
+    description: "The cumulative value of all orders"
+    type: cumulative
+    type_params:
+      measure: order_total
+
+  - name: cumulative_order_total_l1m
+    label: Cumulative order total (L1M)   
+    description: Trailing 1-month cumulative order total
+    type: cumulative
+    type_params:
+      measure: 
+        name: order_total
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        window: 1 month
+  
+  - name: cumulative_order_total_mtd
+    label: Cumulative order total (MTD)
+    description: The month-to-date value of all orders
+    type: cumulative
+    type_params:
+      measure: 
+        name: order_total
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: first

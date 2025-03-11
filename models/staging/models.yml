@@ -28,6 +28,15 @@ models:
           - not_null
           - unique
 
+  - name: stg_payments
+    description: Payment data with basic cleaning and transformation applied, one row per payment transaction.
+    columns:
+      - name: payment_id
+        description: The unique key for each payment transaction.
+        tests:
+          - not_null
+          - unique
+
   - name: stg_products
     description: Product data with basic cleaning and transformation applied, one row per product.
     columns:
@@ -46,11 +55,11 @@ models:
           - not_null
           - unique
 
-  - name: stg_payments
-    description: Payment data with basic cleaning and transformation applied, one row per payment transaction.
+  - name: stg_supplies
+    description: Supply data with basic cleaning and transformation applied, one row per supply and product.
     columns:
-      - name: payment_id
-        description: The unique key for each payment transaction.
+      - name: supply_uuid
+        description: The unique key for supply and product.
         tests:
           - not_null
           - unique
