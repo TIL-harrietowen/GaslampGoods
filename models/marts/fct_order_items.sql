@@ -30,8 +30,8 @@ joined as (
         products.product_type,
         products.product_description,
         products.product_price,
-        products.is_lifestyle_and_goods,
-        products.is_food_and_drink,
+        products.is_lifestyle_and_goods::boolean AS is_lifestyle_and_goods,
+        products.is_food_and_drink::boolean as is_food_and_drink,
         supplies.supply_cost,
         orders.ordered_at
 

@@ -29,11 +29,7 @@ semantic_models:
           time_granularity: day
       - name: customer_name
         type: categorical
-      - name: is_food_and_drink
-        type: categorical
-      - name: is_lifestyle_and_goods
-        type: categorical
-
+        
     measures:
       - name: order_total
         description: The total amount for each order including taxes.

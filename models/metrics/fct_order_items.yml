@@ -5,7 +5,6 @@ semantic_models:
     description: |
       Order items fact table. This table is at the order-item grain.
     model: ref('fct_order_items')
-
     entities:
       - name: order_item_id
         type: primary
@@ -43,7 +42,6 @@ semantic_models:
         agg: sum
 
 metrics:
-  
   #SIMPLE
   - name: order_item_count
     description: "Total number of order items"
@@ -73,7 +71,7 @@ metrics:
     type_params:
       measure: total_sales
     filter: |
-      {{ Dimension('order__is_food_and_drink') }} = True
+      {{ Dimension('order_item_id__is_food_and_drink') }} = True
 
   - name: lifestyle_and_goods_order_sales
     description: "Sales from lifestyle and Goods Orders"
@@ -82,8 +80,8 @@ metrics:
     type_params:
       measure: total_sales
     filter: |
-      {{ Dimension('order__is_lifestyle_and_goods') }} = True
-  
+      {{ Dimension('order_item_id__is_lifestyle_and_goods') }} = True
+
   #DERIVED
   - name: gross_profit
     description: "Gross profit from orders"
