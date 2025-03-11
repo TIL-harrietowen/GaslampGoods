@@ -9,12 +9,10 @@ semantic_models:
     entities:
       - name: order_item_id
         type: primary
-      - name: order
+      - name: order_id
         type: foreign
-        expr: order_id
-      - name: product
+      - name: product_id
         type: foreign
-        expr: product_id
 
     dimensions:
       - name: ordered_at

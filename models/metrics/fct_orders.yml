@@ -8,12 +8,10 @@ semantic_models:
     entities:
       - name: order_id
         type: primary
-      - name: store
+      - name: location_id
         type: foreign
-        expr: location_id
-      - name: customer
+      - name: customer_id
         type: foreign
-        expr: customer_id
 
     dimensions:
       - name: ordered_at
