@@ -1,0 +1,13 @@
+exposures:
+  - name: gaslampgoods_data
+    label: gaslampgoods_data
+    type: dashboard
+    maturity: low
+    url: https://tableauserver.theinformationlab.co.uk/#/site/til2/views/dbtTableaudatahealthtiles/Dashboard1?:iid=2
+    description: description
+    owner:
+      name: Harriet Owen
+      email: harriet.owen@theinformationlab.com
+    depends_on:
+      - ref('fct_orders')
+      - ref('fct_order_items')
