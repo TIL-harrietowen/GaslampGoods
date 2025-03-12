@@ -57,6 +57,13 @@ metrics:
     label: "Total Sales"
     type_params:
       measure: total_sales
+  
+  - name: avg_sales
+    description: "Average sales from order items"
+    type: simple
+    label: "Average Sales"
+    type_params:
+      measure: average_sales
 
   - name: total_supply_cost
     description: "Total supply cost from order items"
@@ -65,16 +72,16 @@ metrics:
     type_params:
       measure: total_supply_cost
 
-  - name: food_and_drink_order_sales
+  - name: food_and_drink_sales
     description: "Sales from Food and Drink Orders"
     type: simple
-    label: "Food and Drink Order Sales"
+    label: "Food and Drink Sales"
     type_params:
       measure: total_sales
     filter: |
       {{ Dimension('order_item_id__is_food_and_drink') }} = True
 
-  - name: lifestyle_and_goods_order_sales
+  - name: lifestyle_and_goods_sales
     description: "Sales from lifestyle and Goods Orders"
     type: simple
     label: "Lifestyle and Goods Sales"
@@ -85,7 +92,7 @@ metrics:
 
   #DERIVED
   - name: gross_profit
-    description: "Gross profit from orders"
+    description: "Gross profit of Products"
     type: derived
     label: "Gross Profit"
     type_params:

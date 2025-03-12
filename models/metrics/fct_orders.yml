@@ -40,14 +40,9 @@ semantic_models:
       - name: tax_paid
         description: The total tax paid on each order.
         agg: sum
-      - name: customers_with_orders
-        description: Distinct count of customers placing orders.
-        agg: count_distinct
-        expr: customer_id
-      - name: locations_with_orders
-        description: Distinct count of locations with orders.
-        expr: location_id
-        agg: count_distinct
+      - name: subtotal
+        description: The total amount for each order exlcuding taxes.
+        agg: sum
       - name: max_order_value
         expr: order_total
         agg: max
@@ -65,26 +60,19 @@ metrics:
     type_params:
       measure: order_total
 
-  - name: tax_paid
+  - name: order_tax_paid
     description: "Tax paid per Order"
     type: simple
-    label: "Tax Paid"
+    label: "Order Tax Paid"
     type_params:
       measure: tax_paid
 
-  - name: customers_with_orders
-    description: "The number of locations that have orders."
+  - name: order_total_pretax
+    description: "Order total before tax"
     type: simple
-    label: "Customers with Orders"
+    label: "Order Total Pre-Tax"
     type_params:
-      measure: customers_with_orders
-
-  - name: locations_with_orders
-    description: "The number of locations that have orders."
-    type: simple
-    label: "Locations with Orders"
-    type_params:
-      measure: locations_with_orders
+      measure: subtotal
 
   - name: max_order_amount
     label: "Max Order Amount"
