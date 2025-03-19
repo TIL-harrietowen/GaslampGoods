@@ -5,9 +5,9 @@ sources:
     database: til_us
     schema: gaslamp_goods
     tables:
-      - name: customers
-      - name: orders
-      - name: items
-      - name: products
-      - name: stores
+      - name: raw_customers
+      - name: raw_orders
+      - name: raw_items
+      - name: raw_products
+      - name: raw_stores
       - name: raw_supplies 
