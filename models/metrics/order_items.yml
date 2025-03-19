@@ -45,6 +45,9 @@ semantic_models:
       - name: total_supply_cost
         expr: supply_cost
         agg: sum
+      - name: average_supply_cost
+        expr: supply_cost
+        agg: average
 
 metrics:
   #SIMPLE
@@ -69,6 +72,13 @@ metrics:
     type_params:
       measure: total_supply_cost
 
+  - name: average_supply_cost
+    description: "Average supply cost from order items"
+    type: simple
+    label: "Average Supply Cost"
+    type_params:
+      measure: average_supply_cost
+
   - name: food_and_drink_revenue
     description: "Revenue from Food and Drink Orders"
     type: simple
@@ -86,6 +96,13 @@ metrics:
       measure: revenue
     filter: |
       {{ Dimension('order_item_id__is_lifestyle_and_goods') }} = True
+
+  - name: count_of_order_items
+    description: "Number of order items"
+    type: simple
+    label: "Count of Order Items"
+    type_params:
+      measure: order_item_count
 
   #DERIVED
   - name: gross_profit

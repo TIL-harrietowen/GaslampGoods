@@ -49,6 +49,9 @@ semantic_models:
       - name: min_order_value
         expr: order_total
         agg: min
+      - name: count_of_orders
+        expr: order_id
+        agg: count_distinct
 
 metrics:
 
@@ -87,6 +90,13 @@ metrics:
     type: simple
     type_params:
       measure: min_order_value
+
+  - name: count_of_orders
+    label: "Count of Orders"
+    description: "Number of Orders"
+    type: simple
+    type_params:
+      measure: count_of_orders
 
   #CUMULATIVE
   - name: cumulative_order_total
