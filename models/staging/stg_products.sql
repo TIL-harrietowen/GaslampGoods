@@ -3,7 +3,7 @@ with
 
 source as (
 
-    select * from {{ source('gaslamp_goods', 'products') }}
+    select * from {{ source('gaslamp_goods', 'raw_products') }}
 ),
 
 renamed as (

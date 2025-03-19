@@ -9,6 +9,5 @@ sources:
       - name: orders
       - name: items
       - name: products
-      - name: payment 
       - name: stores
-      - name: supplies 
+      - name: raw_supplies 
