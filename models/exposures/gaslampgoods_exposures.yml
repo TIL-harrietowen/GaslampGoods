@@ -9,5 +9,5 @@ exposures:
       name: Harriet Owen
       email: harriet.owen@theinformationlab.com
     depends_on:
-      - ref('fct_orders')
-      - ref('fct_order_items')
+      - ref('orders')
+      - ref('order_items')

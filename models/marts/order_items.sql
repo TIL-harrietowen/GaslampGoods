@@ -17,7 +17,8 @@ products as (
 
 supplies as (
 
-    select * from {{ ref('fct_supplies') }}
+   select * from {{ ref('int_supplies') }}
+
 ),
 
 joined as (

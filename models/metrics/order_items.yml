@@ -4,7 +4,7 @@ semantic_models:
       agg_time_dimension: ordered_at
     description: |
       Order items fact table. This table is at the order-item grain.
-    model: ref('fct_order_items')
+    model: ref('order_items')
     
     entities:
       - name: order_item_id
@@ -35,35 +35,32 @@ semantic_models:
       - name: order_item_count
         expr: 1
         agg: sum
-      - name: total_sales
+      - name: revenue
         expr: product_price
+        description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
         agg: sum
+      - name: average_revenue
+        expr: product_price
+        agg: average
       - name: total_supply_cost
         expr: supply_cost
         agg: sum
 
 metrics:
   #SIMPLE
-  - name: order_item_count
-    description: "Total number of order items"
+  - name: revenue
+    description: "Sum of the product revenue for each order item. Excludes tax."
     type: simple
-    label: "Order Item Count"
+    label: "Revenue"
     type_params:
-      measure: order_item_count
-
-  - name: total_sales
-    description: "Total sales from order items"
-    type: simple
-    label: "Total Sales"
-    type_params:
-      measure: total_sales
+      measure: revenue
   
-  - name: avg_sales
-    description: "Average sales from order items"
+  - name: avg_revenue
+    description: "Average product revenue for each order item. Excludes tax."
     type: simple
-    label: "Average Sales"
+    label: "Average Revenue"
     type_params:
-      measure: average_sales
+      measure: average_revenue
 
   - name: total_supply_cost
     description: "Total supply cost from order items"
@@ -72,21 +69,21 @@ metrics:
     type_params:
       measure: total_supply_cost
 
-  - name: food_and_drink_sales
-    description: "Sales from Food and Drink Orders"
+  - name: food_and_drink_revenue
+    description: "Revenue from Food and Drink Orders"
     type: simple
-    label: "Food and Drink Sales"
+    label: "Food and Drink Revenue"
     type_params:
-      measure: total_sales
+      measure: revenue
     filter: |
       {{ Dimension('order_item_id__is_food_and_drink') }} = True
 
-  - name: lifestyle_and_goods_sales
-    description: "Sales from lifestyle and Goods Orders"
+  - name: lifestyle_and_goods_revenue
+    description: "Revenue from lifestyle and Goods Orders"
     type: simple
-    label: "Lifestyle and Goods Sales"
+    label: "Lifestyle and Goods Revenue"
     type_params:
-      measure: total_sales
+      measure: revenue
     filter: |
       {{ Dimension('order_item_id__is_lifestyle_and_goods') }} = True
 
@@ -96,9 +93,8 @@ metrics:
     type: derived
     label: "Gross Profit"
     type_params:
-      expr: sales - cost
+      expr: revenue - cost
       metrics:
-        - name: total_sales
-          alias: sales
+        - name: revenue
         - name: total_supply_cost
           alias: cost
