@@ -39,5 +39,7 @@ models:
   GaslampGoods:
     staging:
       +materialized: view
-    analytics:
+    intermediate:
+      +materialized: view
+    marts:
       +materialized: table
