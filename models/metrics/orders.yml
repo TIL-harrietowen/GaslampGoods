@@ -63,13 +63,6 @@ metrics:
     type_params:
       measure: order_total
 
-  - name: order_tax_paid
-    description: "Tax paid per Order"
-    type: simple
-    label: "Order Tax Paid"
-    type_params:
-      measure: tax_paid
-
   - name: order_total_pretax
     description: "Order total before tax"
     type: simple
@@ -84,35 +77,9 @@ metrics:
     type_params:
       measure: max_order_value
 
-  - name: min_order_amount
-    label: "Min Order Amount"
-    description: "The lowest order value for a given period"
-    type: simple
-    type_params:
-      measure: min_order_value
-
   - name: count_of_orders
     label: "Count of Orders"
     description: "Number of Orders"
     type: simple
     type_params:
       measure: count_of_orders
-
-  #CUMULATIVE
-  - name: cumulative_order_total
-    label: "Cumulative Order Total (All-Time)"
-    description: "The cumulative value of all orders"
-    type: cumulative
-    type_params:
-      measure: order_total
-  
-  - name: cumulative_order_total_mtd
-    label: Cumulative order total (MTD)
-    description: The month-to-date value of all orders
-    type: cumulative
-    type_params:
-      measure: 
-        name: order_total
-      cumulative_type_params:
-        grain_to_date: month
-        period_agg: first
