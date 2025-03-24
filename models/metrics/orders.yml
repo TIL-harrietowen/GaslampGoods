@@ -63,13 +63,6 @@ metrics:
     type_params:
       measure: order_total
 
-  - name: order_total_pretax
-    description: "Order total before tax"
-    type: simple
-    label: "Order Total Pre-Tax"
-    type_params:
-      measure: subtotal
-
   - name: max_order_amount
     label: "Max Order Amount"
     description: "The highest order value for a given period"

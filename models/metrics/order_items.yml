@@ -42,6 +42,9 @@ semantic_models:
       - name: average_revenue
         expr: product_price
         agg: average
+      - name: median_revenue
+        expr: product_price
+        agg: median
       - name: total_supply_cost
         expr: supply_cost
         agg: sum
@@ -65,19 +68,19 @@ metrics:
     type_params:
       measure: average_revenue
 
-  - name: total_supply_cost
+  - name: median_revenue
+    description: "Median product revenue for each order item. Excludes tax."
+    type: simple
+    label: "Median Revenue"
+    type_params:
+      measure: median_revenue
+
+  - name: supply_cost
     description: "Total supply cost from order items"
     type: simple
-    label: "Total Supply Cost"
+    label: "Supply Cost"
     type_params:
       measure: total_supply_cost
-
-  - name: average_supply_cost
-    description: "Average supply cost from order items"
-    type: simple
-    label: "Average Supply Cost"
-    type_params:
-      measure: average_supply_cost
 
   - name: food_and_drink_revenue
     description: "Revenue from Food and Drink Orders"
