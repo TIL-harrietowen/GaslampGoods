@@ -3,7 +3,7 @@ semantic_models:
     defaults:
       agg_time_dimension: ordered_at
     description: |
-      Order items fact table. This table is at the order-item grain.
+      Order items table. This table is at the order-item grain.
     model: ref('order_items')
     
     entities:
@@ -33,11 +33,10 @@ semantic_models:
 
     measures:
       - name: order_item_count
-        expr: 1
-        agg: sum
+        expr: order_item_id
+        agg: count_distinct
       - name: revenue
         expr: product_price
-        description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
         agg: sum
       - name: average_revenue
         expr: product_price
@@ -48,9 +47,6 @@ semantic_models:
       - name: supply_cost
         expr: supply_cost
         agg: sum
-      - name: average_supply_cost
-        expr: supply_cost
-        agg: average
 
 metrics:
   #SIMPLE
@@ -118,3 +114,11 @@ metrics:
         - name: revenue
         - name: supply_cost
           alias: cost
+
+
+
+
+
+
+
+

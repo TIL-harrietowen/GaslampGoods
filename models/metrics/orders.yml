@@ -72,7 +72,7 @@ metrics:
 
   - name: count_of_orders
     label: "Count of Orders"
-    description: "Number of Orders"
+    description: "Total number of orders"
     type: simple
     type_params:
       measure: count_of_orders
