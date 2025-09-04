@@ -6,10 +6,10 @@ sources:
     schema: gaslamp_goods
     freshness: 
       error_after:
-        count: 2
+        count: 365
         period: day
       warn_after:
-        count: 1
+        count: 182
         period: day
     
     tables:
