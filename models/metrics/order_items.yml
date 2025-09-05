@@ -49,6 +49,7 @@ semantic_models:
         agg: sum
 
 metrics:
+
   #SIMPLE
   - name: revenue
     description: "Sum of the product revenue for each order item. Excludes tax."
@@ -78,24 +79,6 @@ metrics:
     type_params:
       measure: supply_cost
 
-  - name: food_and_drink_revenue
-    description: "Revenue from Food and Drink Orders"
-    type: simple
-    label: "Food and Drink Revenue"
-    type_params:
-      measure: revenue
-    filter: |
-      {{ Dimension('order_item_id__is_food_and_drink') }} = True
-
-  - name: lifestyle_and_goods_revenue
-    description: "Revenue from lifestyle and Goods Orders"
-    type: simple
-    label: "Lifestyle and Goods Revenue"
-    type_params:
-      measure: revenue
-    filter: |
-      {{ Dimension('order_item_id__is_lifestyle_and_goods') }} = True
-
   - name: count_of_order_items
     description: "Number of order items"
     type: simple
@@ -115,6 +98,15 @@ metrics:
         - name: supply_cost
           alias: cost
 
+  #CUMULATIVE
+  - name: latest_month_revenue
+    description: Revenue for the latest month
+    label: Latest Month Revenue
+    type: cumulative
+    type_params:
+      measure:
+        name: revenue
+      window: 1 month
 
 
 
