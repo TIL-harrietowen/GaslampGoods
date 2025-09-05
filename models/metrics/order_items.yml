@@ -49,6 +49,14 @@ semantic_models:
         agg: sum
 
 metrics:
+  - name: current_month_revenue
+    description: Revenue for the current month
+    label: Current Month Revenue
+    type: cumulative
+    type_params:
+      grain_to_date: month
+      measure:
+        name: revenue
 
   #SIMPLE
   - name: revenue
