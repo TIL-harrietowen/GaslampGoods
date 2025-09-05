@@ -114,6 +114,7 @@ metrics:
     type_params:
       measure:
         name: revenue
+        join_to_timespine: true
       window: 1 month
 
 
