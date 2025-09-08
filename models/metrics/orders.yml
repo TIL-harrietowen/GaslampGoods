@@ -32,16 +32,17 @@ semantic_models:
         
     measures:
       - name: order_total
+        label: Order Total
         description: The total amount for each order including taxes.
         agg: sum
       - name: order_count
         expr: 1
         agg: sum
+      - name: customer_count
+        expr: customer_name
+        agg: count_distinct
       - name: tax_paid
         description: The total tax paid on each order.
-        agg: sum
-      - name: subtotal
-        description: The total amount for each order exlcuding taxes.
         agg: sum
       - name: max_order_value
         expr: order_total
@@ -49,9 +50,6 @@ semantic_models:
       - name: min_order_value
         expr: order_total
         agg: min
-      - name: count_of_orders
-        expr: order_id
-        agg: count_distinct
 
 metrics:
 
@@ -75,4 +73,39 @@ metrics:
     description: "Total number of orders"
     type: simple
     type_params:
-      measure: count_of_orders
+      measure: order_count
+  - name: count_of_customers
+    label: "Count of Customers"
+    description: "Total number of customers"
+    type: simple
+    type_params:
+      measure: customer_count
+
+#CUMULATIVE
+  - name: cumulative_total_orders_mtd
+    label: Cumulative Total Orders (MTD)
+    description: The month-to-date count of all orders
+    type: cumulative
+    time_granularity: month
+    type_params:
+      measure:
+        name: order_count
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: last
+
+  - name: cumulative_total_customers_mtd
+    label: Cumulative Total Customers (MTD)
+    description: The month-to-date count of Customers
+    type: cumulative
+    time_granularity: month
+    type_params:
+      measure:
+        name: order_count
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: last

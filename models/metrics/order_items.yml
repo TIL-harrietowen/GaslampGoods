@@ -86,6 +86,48 @@ metrics:
     type_params:
       measure: order_item_count
 
+  #CUMULATIVE
+  - name: cumulative_month_revenue
+    description: Trailing 1-month cumulative order total
+    label: Cumulative 1 Month Revenue
+    type: cumulative
+    type_params:
+      measure:
+        name: revenue
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        window: 1 month
+        period_agg: last
+
+  - name: cumulative_revenue_mtd
+    label: Cumulative Revenue (MTD)
+    description: The month-to-date value of all orders
+    type: cumulative
+    time_granularity: month
+    type_params:
+      measure:
+        name: revenue
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: last
+
+  - name: cumulative_supply_cost_mtd
+    label: Cumulative Supply Cost (MTD)
+    description: The month-to-date supply cost of all orders
+    type: cumulative
+    time_granularity: month
+    type_params:
+      measure:
+        name: supply_cost
+        join_to_timespine: true
+        fill_nulls_with: 0
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: last
+
   #DERIVED
   - name: gross_profit
     description: "Gross profit of Products"
@@ -98,33 +140,14 @@ metrics:
         - name: supply_cost
           alias: cost
 
-  #CUMULATIVE
-  - name: latest_month_revenue
-    description: Revenue for the latest month
-    label: Latest Month Revenue
-    type: cumulative
+  - name: cumulative_gross_profit_mtd
+    label: Cumulative Gross Profit (MTD)
+    description: The month-to-date gross profit of all orders
+    type: derived
     type_params:
-      measure:
-        name: revenue
-        join_to_timespine: true
-        fill_nulls_with: 0
-      cumulative_type_params:
-        window: 1 month
-        period_agg: last
-
-  - name: current_month_revenue
-    description: Revenue for the current month
-    label: Current Month Revenue
-    type: cumulative
-    type_params:
-      cumulative_type_params:
-        grain_to_date: month
-        period_agg: last
-      measure:
-        name: revenue
-
-
-
-
-
-
+      expr: revenue - cost
+      metrics:
+        - name: cumulative_revenue_mtd
+          alias: revenue
+        - name: cumulative_supply_cost_mtd
+          alias: cost
