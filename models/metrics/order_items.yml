@@ -132,9 +132,9 @@ metrics:
 
   - name: revenue_last_month
     type: derived
-    label: "Last Month Revenue"
+    label: Last Month Revenue
     type_params:
-      expr: rev_prev_month
+      expr: rev_prev_month * 1
       metrics:
         - name: revenue
           alias: rev_prev_month
