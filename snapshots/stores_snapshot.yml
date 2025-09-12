@@ -1,0 +1,10 @@
+snapshots:
+  - name: stores_snapshot
+    relation: source('gaslamp_goods', 'raw_stores')
+    config:
+      schema: SNAPSHOTS
+      database: TIL_US
+      unique_key: id
+      strategy: check
+      check_cols: all
+      hard_deletes: ignore
