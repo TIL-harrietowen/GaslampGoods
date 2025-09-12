@@ -129,6 +129,17 @@ metrics:
         period_agg: last
 
   #DERIVED
+
+  - name: revenue_last_month
+    type: derived
+    label: "Last Month Revenue"
+    type_params:
+      expr: rev_prev_month
+      metrics:
+        - name: revenue
+          alias: rev_prev_month
+          offset_window: 1 month
+
   - name: gross_profit
     description: "Gross profit of Products"
     type: derived
