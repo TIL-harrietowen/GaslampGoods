@@ -4,7 +4,7 @@ exposures:
     type: dashboard
     maturity: low
     url: https://10ax.online.tableau.com/#/site/tilpulse/views/GaslampGoods-WIP/GASLAMPGOODS
-    description: description
+    description: '{{ doc("exposure_details") }}'
     owner:
       name: Harriet Owen
       email: harriet.owen@theinformationlab.com
