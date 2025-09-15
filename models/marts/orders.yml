@@ -1,0 +1,37 @@
+models:
+- name: orders
+  description: This model consolidates order data with customer and store information
+    to provide a comprehensive view of each order, including customer names and store
+    locations.
+  columns:
+  - name: order_id
+    description: A unique identifier for each order.
+    data_tests:
+      - unique
+      - not_null
+  - name: location_id
+    description: The identifier for the store location where the order was placed.
+    data_tests:
+      - not_null
+  - name: customer_id
+    description: The identifier for the customer who placed the order.
+    data_tests:
+      - not_null
+  - name: ordered_at
+    description: The timestamp when the order was placed.
+    data_tests:
+      - not_null
+  - name: order_total
+    description: The total amount for the order, including tax.
+    data_tests:
+      - not_null
+  - name: tax_paid
+    description: The amount of tax paid for the order.
+  - name: subtotal
+    description: The total amount for the order before tax.
+  - name: customer_name
+    description: The name of the customer who placed the order.
+  - name: location_name
+    description: The name of the store location where the order was placed.
+  - name: location_opened_at
+    description: The date when the store location was opened.

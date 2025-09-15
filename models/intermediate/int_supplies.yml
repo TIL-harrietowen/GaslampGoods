@@ -1,0 +1,15 @@
+models:
+- name: int_supplies
+  description: This model aggregates the total supply cost for each product. It is
+    used to understand the cost associated with supplying each product, which can
+    aid in cost management and pricing strategies.
+  columns:
+  - name: product_id
+    description: A unique identifier for each product.
+    data_tests:
+      - unique
+      - not_null
+  - name: supply_cost
+    description: The total cost incurred for supplying the product.
+    data_tests:
+      - not_null

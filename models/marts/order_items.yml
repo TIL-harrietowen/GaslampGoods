@@ -1,0 +1,36 @@
+models:
+- name: order_items
+  description: This model consolidates order item details with related product, supply,
+    and order information. It provides a comprehensive view of each order item, including
+    its associated product details, supply costs, and order timing, which can be used
+    for sales analysis, inventory management, and supply chain optimization.
+  columns:
+  - name: order_item_id
+    description: A unique identifier for each order item.
+    data_tests:
+      - unique
+      - not_null
+  - name: order_id
+    description: The identifier for the order to which this item belongs.
+    data_tests:
+      - not_null
+  - name: product_id
+    description: The identifier for the product associated with this order item.
+    data_tests:
+      - not_null
+  - name: product_name
+    description: The name of the product.
+  - name: product_type
+    description: The category or type of the product.
+  - name: product_description
+    description: A detailed description of the product.
+  - name: product_price
+    description: The price of the product.
+  - name: is_lifestyle_and_goods
+    description: Indicates if the product is categorized under lifestyle and goods.
+  - name: is_food_and_drink
+    description: Indicates if the product is categorized under food and drink.
+  - name: supply_cost
+    description: The cost associated with supplying the product.
+  - name: ordered_at
+    description: The timestamp when the order was placed.
