@@ -67,6 +67,13 @@ semantic_models:
         agg: sum
         create_metric: true
 
+      - name: order_items_dummy
+        label: "Order Items Dummy"
+        description: "A dummy field to use for formatting purposes"
+        expr: 0
+        agg: min
+        create_metric: true
+
 metrics:
 
   #DERIVED
