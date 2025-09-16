@@ -19,7 +19,7 @@ renamed as (
         price as product_price,
 
         ---------- derived
-        {{ column_two_group_categorization('type','Food & Drink','Lifestyle & Goods') }}
+        {{ product_type_categorization('type','Food & Drink','Lifestyle & Goods') }}
 
     from source
 
