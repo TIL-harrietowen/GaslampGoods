@@ -98,14 +98,3 @@ metrics:
           offset_window: 1 month
         - name: count_of_customers
           alias: customers
-
-#RATIO
-  - name: orders_per_customer
-    description: Average number of orders per customer
-    label: Orders per Customer
-    type: ratio
-    type_params:
-      denominator:
-        name: count_of_customers
-      numerator:
-        name: count_of_orders

@@ -1,0 +1,25 @@
+models:
+- name: customers
+  description: |
+    This model consolidates customer information with their order history,
+    providing insights into customer behavior and value. It includes details such
+    as the number of orders per customer, the dates of their first and most recent
+    orders, and their total spending, known as lifetime value.
+  columns:
+  - name: customer_id
+    description: A unique identifier for each customer.
+    data_tests:
+      - unique
+      - not_null
+  - name: customer_name
+    description: The name of the customer.
+    data_tests:
+      - not_null
+  - name: orders_per_customer
+    description: The total number of orders placed by the customer.
+  - name: first_order_date
+    description: The date when the customer placed their first order.
+  - name: most_recent_order_date
+    description: The date when the customer placed their most recent order.
+  - name: customer_lifetime_value
+    description: The total monetary value of all orders placed by the customer.
