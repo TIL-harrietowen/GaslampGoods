@@ -32,80 +32,46 @@ semantic_models:
         
     measures:
       - name: order_total
-        label: Order Total
-        description: The total amount for each order including taxes.
+        label: Total Orders
+        description: Sum of orders value
         agg: sum
-      - name: order_count
+        create_metric: true
+
+      - name: count_of_orders
+        label: Count of Orders
+        description: Total number of orders
         expr: 1
         agg: sum
-      - name: customer_count
+        create_metric: true
+
+      - name: count_of_customers
+        label: Count of Customers
+        description: Total number of customers
         expr: customer_name
         agg: count_distinct
+        create_metric: true
+
       - name: tax_paid
         description: The total tax paid on each order.
         agg: sum
-      - name: max_order_value
+
+      - name: max_order_amount
+        label: Max Order Amount
+        description: "The highest order value for a given period"
         expr: order_total
         agg: max
-      - name: min_order_value
-        expr: order_total
-        agg: min
+        create_metric: true
 
 metrics:
 
-  #SIMPLE
-  - name: order_total
-    description: "Sum of orders value"
-    type: simple
-    label: "Order Total"
-    type_params:
-      measure: order_total
+#DERIVED
 
-  - name: max_order_amount
-    label: "Max Order Amount"
-    description: "The highest order value for a given period"
-    type: simple
+  - name: total_orders_last_month
+    type: derived
+    label: Last Month Total Orders
     type_params:
-      measure: max_order_value
-
-  - name: count_of_orders
-    label: "Count of Orders"
-    description: "Total number of orders"
-    type: simple
-    type_params:
-      measure: order_count
-  - name: count_of_customers
-    label: "Count of Customers"
-    description: "Total number of customers"
-    type: simple
-    type_params:
-      measure: customer_count
-
-#CUMULATIVE
-  - name: cumulative_total_orders_mtd
-    label: Cumulative Total Orders (MTD)
-    description: The month-to-date count of all orders
-    type: cumulative
-    time_granularity: month
-    type_params:
-      measure:
-        name: order_count
-        join_to_timespine: true
-        fill_nulls_with: 0
-      cumulative_type_params:
-        grain_to_date: month
-        period_agg: last
-
-  - name: cumulative_total_customers_mtd
-    label: Cumulative Total Customers (MTD)
-    description: The month-to-date count of Customers
-    type: cumulative
-    time_granularity: month
-    type_params:
-      measure:
-        name: order_count
-        join_to_timespine: true
-        fill_nulls_with: 0
-      cumulative_type_params:
-        grain_to_date: month
-        period_agg: last
+      expr: orders_prev_month * 1
+      metrics:
+        - name: count_of_orders
+          alias: orders_prev_month
+          offset_window: 1 month
