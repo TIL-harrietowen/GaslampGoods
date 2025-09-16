@@ -24,6 +24,8 @@ semantic_models:
         type: categorical
       - name: product_type
         type: categorical
+      - name: product_type_category
+        type: categorical
       - name: product_description
         type: categorical
       - name: is_food_and_drink
