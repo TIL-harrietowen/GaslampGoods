@@ -67,7 +67,7 @@ metrics:
 #DERIVED
 
   - name: total_orders_growth_mom
-    label: Total Orders Growth MoM %
+    label: "Total Orders Growth MoM %"
     description: Percentage growth of total orders completed to 1 month ago
     type: derived
     type_params:
@@ -80,7 +80,7 @@ metrics:
           alias: orders
 
   - name: total_customers_growth_mom
-    label: Total Customers Growth MoM %
+    label: "Total Customers Growth MoM %"
     description: Percentage growth of total customers completed to 1 month ago
     type: derived
     type_params:

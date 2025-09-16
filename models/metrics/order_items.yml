@@ -71,9 +71,9 @@ metrics:
 
   #DERIVED
   - name: gross_profit
-    description: "Gross profit of Products"
+    description: Gross profit of Products
     type: derived
-    label: "Gross Profit"
+    label: Gross Profit
     type_params:
       expr: revenue - cost
       metrics:
@@ -104,7 +104,7 @@ metrics:
           offset_window: 1 year
 
   - name: revenue_growth_mom
-    label: Revenue Growth MoM %
+    label: "Revenue Growth MoM %"
     description: Percentage growth of revenue completed to 1 month ago
     type: derived
     type_params:
@@ -116,7 +116,7 @@ metrics:
         - name: revenue
 
   - name: profit_growth_mom
-    label: Profit Growth MoM %
+    label: "Profit Growth MoM %"
     description: Percentage growth of profit completed to 1 month ago
     type: derived
     type_params:
