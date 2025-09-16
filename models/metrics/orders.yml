@@ -66,12 +66,39 @@ metrics:
 
 #DERIVED
 
-  - name: total_orders_last_month
+  - name: total_orders_growth_mom
+    label: Total Orders Growth MoM %
+    description: Percentage growth of total orders completed to 1 month ago
     type: derived
-    label: Last Month Total Orders
     type_params:
-      expr: orders_prev_month * 1
+      expr: (orders - orders_prev_month)*100 / orders_prev_month
       metrics:
         - name: count_of_orders
           alias: orders_prev_month
           offset_window: 1 month
+        - name: count_of_orders
+          alias: orders
+
+  - name: total_customers_growth_mom
+    label: Total Customers Growth MoM %
+    description: Percentage growth of total customers completed to 1 month ago
+    type: derived
+    type_params:
+      expr: (customers - customers_prev_month)*100 / customers_prev_month
+      metrics:
+        - name: count_of_customers
+          alias: customers_prev_month
+          offset_window: 1 month
+        - name: count_of_customers
+          alias: customers
+
+#RATIO
+  - name: orders_per_customer
+    description: Average number of orders per customer
+    label: Orders per Customer
+    type: ratio
+    type_params:
+      denominator:
+        name: count_of_customers
+      numerator:
+        name: count_of_orders
