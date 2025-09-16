@@ -26,10 +26,11 @@ models:
     description: A detailed description of the product.
   - name: product_price
     description: The price of the product.
-  - name: is_lifestyle_and_goods
-    description: Indicates if the product is categorized under lifestyle and goods.
-  - name: is_food_and_drink
-    description: Indicates if the product is categorized under food and drink.
+  - name: product_type_category
+    description: Indicates if the product is categorized under food and drink or lifestyle and goods.
+    data_tests:
+      - accepted_values:
+          values: ['Food & Drink', 'Lifestyle & Goods']
   - name: supply_cost
     description: The cost associated with supplying the product.
   - name: ordered_at

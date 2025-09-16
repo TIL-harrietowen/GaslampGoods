@@ -17,6 +17,10 @@ models:
     description: The identifier for the customer who placed the order.
     data_tests:
       - not_null
+      - relationships:
+          arguments:
+            field: customer_id
+            to: ref('customers')
   - name: ordered_at
     description: The timestamp when the order was placed.
     data_tests:
