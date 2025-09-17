@@ -26,12 +26,6 @@ semantic_models:
         type: categorical
       - name: product_type_category
         type: categorical
-      - name: product_description
-        type: categorical
-      - name: is_food_and_drink
-        type: categorical
-      - name: is_lifestyle_and_goods
-        type: categorical
 
     measures:
       - name: count_of_order_items
@@ -53,13 +47,6 @@ semantic_models:
         description: Average product revenue for each order item
         expr: product_price
         agg: average
-        create_metric: true
-
-      - name: median_revenue
-        label: Median Revenue
-        description: Median product revenue for each order item.
-        expr: product_price
-        agg: median
         create_metric: true
 
       - name: supply_cost
