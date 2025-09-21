@@ -26,9 +26,6 @@ semantic_models:
     type: time
     type_params:
       time_granularity: day
-  - name: orders_per_customer
-    type: categorical
-    description: The number of orders placed by the customer, as a dimension.
 
   measures:
   - name: customer_lifetime_value
