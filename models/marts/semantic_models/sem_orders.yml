@@ -1,0 +1,96 @@
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order fact table. This table is at the order grain with one row per order.
+    model: ref('orders')
+
+    entities:
+      - name: order_id
+        type: primary
+      - name: location_id
+        type: foreign
+      - name: customer_id
+        type: foreign
+
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc('day', ordered_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: location_opened_at
+        expr: date_trunc('day', location_opened_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: customer_name
+        type: categorical
+      - name: location_name
+        type: categorical
+        
+    measures:
+      - name: order_total
+        label: Total Orders
+        description: Sum of orders value
+        agg: sum
+        create_metric: true
+
+      - name: count_of_orders
+        label: Count of Orders
+        description: Total number of orders
+        expr: order_id
+        agg: count_distinct
+        create_metric: true
+
+      - name: count_of_customers
+        label: Count of Customers
+        description: Total number of customers
+        expr: customer_name
+        agg: count_distinct
+        create_metric: true
+
+      - name: max_order_amount
+        label: Max Order Amount
+        description: "The highest order value for a given period"
+        expr: order_total
+        agg: max
+        create_metric: true
+
+      - name: orders_dummy
+        label: "Orders Dummy"
+        description: "A dummy field to use for formatting purposes"
+        expr: 0
+        agg: min
+        create_metric: true
+
+metrics:
+
+#DERIVED
+
+  - name: total_orders_growth_mom
+    label: "Total Orders Growth MoM %"
+    description: Percentage growth of total orders completed to 1 month ago
+    type: derived
+    type_params:
+      expr: (orders - orders_prev_month)*100 / orders_prev_month
+      metrics:
+        - name: count_of_orders
+          alias: orders_prev_month
+          offset_window: 1 month
+        - name: count_of_orders
+          alias: orders
+
+  - name: total_customers_growth_mom
+    label: "Total Customers Growth MoM %"
+    description: Percentage growth of total customers completed to 1 month ago
+    type: derived
+    type_params:
+      expr: (customers - customers_prev_month)*100 / customers_prev_month
+      metrics:
+        - name: count_of_customers
+          alias: customers_prev_month
+          offset_window: 1 month
+        - name: count_of_customers
+          alias: customers

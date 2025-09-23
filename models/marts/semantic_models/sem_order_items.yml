@@ -1,0 +1,125 @@
+semantic_models:
+  - name: order_items
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order items table. This table is at the order-item grain.
+    model: ref('order_items')
+    
+    entities:
+      - name: order_item_id
+        type: primary
+      - name: order_id
+        type: foreign
+      - name: product_id
+        type: foreign
+
+    dimensions:
+      - name: ordered_at
+        expr: date_trunc('day', ordered_at)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: product_name
+        type: categorical
+      - name: product_type
+        type: categorical
+      - name: product_type_category
+        type: categorical
+
+    measures:
+      - name: count_of_order_items
+        label: Count of Order Items
+        description: Number of order items
+        expr: order_item_id
+        agg: count_distinct
+        create_metric: true
+
+      - name: revenue
+        label: Revenue
+        description: Sum of the product revenue for each order item
+        expr: product_price
+        agg: sum
+        create_metric: true
+
+      - name: average_revenue
+        label: Average Revenue
+        description: Average product revenue for each order item
+        expr: product_price
+        agg: average
+        create_metric: true
+
+      - name: supply_cost
+        label: Supply Cost
+        description: Total supply cost from order items
+        expr: supply_cost
+        agg: sum
+        create_metric: true
+
+      - name: order_items_dummy
+        label: "Order Items Dummy"
+        description: "A dummy field to use for formatting purposes"
+        expr: 0
+        agg: min
+        create_metric: true
+
+metrics:
+
+  #DERIVED
+  - name: gross_profit
+    description: Gross profit of Products
+    type: derived
+    label: Gross Profit
+    type_params:
+      expr: revenue - cost
+      metrics:
+        - name: revenue
+        - name: supply_cost
+          alias: cost
+
+  - name: prior_month_revenue
+    label: Prior Month Revenue
+    description: Revenue from the prior month
+    type: derived
+    type_params:
+      expr: rev_prev_month * 1
+      metrics:
+        - name: revenue
+          alias: rev_prev_month
+          offset_window: 1 month
+
+  - name: prior_year_revenue
+    label: Prior Year Revenue
+    description: Revenue from the prior year
+    type: derived
+    type_params:
+      expr: rev_prev_year * 1
+      metrics:
+        - name: revenue
+          alias: rev_prev_year
+          offset_window: 1 year
+
+  - name: revenue_growth_mom
+    label: "Revenue Growth MoM %"
+    description: Percentage growth of revenue completed to 1 month ago
+    type: derived
+    type_params:
+      expr: (revenue - rev_prev_month)*100 / rev_prev_month
+      metrics:
+        - name: revenue
+          alias: rev_prev_month
+          offset_window: 1 month
+        - name: revenue
+
+  - name: profit_growth_mom
+    label: "Profit Growth MoM %"
+    description: Percentage growth of profit completed to 1 month ago
+    type: derived
+    type_params:
+      expr: (profit - profit_prev_month)*100 / profit_prev_month
+      metrics:
+        - name: gross_profit
+          alias: profit_prev_month
+          offset_window: 1 month
+        - name: gross_profit
+          alias: profit

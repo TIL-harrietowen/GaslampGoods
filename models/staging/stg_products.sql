@@ -19,15 +19,7 @@ renamed as (
         price as product_price,
 
         ---------- derived
-        case
-            when type != 'Food & Drink' then 1
-            else 0
-        end as is_lifestyle_and_goods,
-
-        case
-            when type = 'Food & Drink' then 1
-            else 0
-        end as is_food_and_drink
+        {{ product_type_categorization('type','Food & Drink','Lifestyle & Goods') }}
 
     from source
 

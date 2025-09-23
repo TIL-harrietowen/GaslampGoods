@@ -1,0 +1,12 @@
+models:
+  - name: metricflow_time_spine
+    description: This model generates a daily time spine for the period from October 1, 2024, to January 1, 2025. It is used to create a continuous sequence of dates, which can be useful for time series analysis and ensuring that every day within the specified range is represented, even if there are no events on certain days.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: The date for each day in the time spine, representing a continuous sequence of days from October 1, 2024, to January 1, 2025.
+        granularity: day
+        data_tests:
+          - unique
+          - not_null

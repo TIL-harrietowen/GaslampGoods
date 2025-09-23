@@ -14,8 +14,15 @@ sources:
     
     tables:
       - name: raw_customers
+        description: Source table containing Customer ID and name.
+        tags: ['raw']
       - name: raw_orders
+        tags: ['raw']
       - name: raw_items
+        tags: ['raw']
       - name: raw_products
+        tags: ['raw']
       - name: raw_stores
-      - name: raw_supplies 
+        tags: ['raw']
+      - name: raw_supplies
+        tags: ['raw']
