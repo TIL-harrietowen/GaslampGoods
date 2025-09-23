@@ -108,7 +108,7 @@ metrics:
       metrics:
         - name: revenue
           alias: rev_prev_month
-          offset_window: 1 month
+          offset_window: 12 month
         - name: revenue
 
   - name: profit_growth_mom
