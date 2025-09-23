@@ -1,6 +1,5 @@
 exposures:
-  - name: gaslampgoods_data
-    label: gaslampgoods_data
+  - name: gaslampgoods
     type: dashboard
     maturity: low
     url: https://10ax.online.tableau.com/#/site/tilpulse/views/GaslampGoodsSalesOverview/GASLAMPGOODS
