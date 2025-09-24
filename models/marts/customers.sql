@@ -10,7 +10,7 @@ customer_orders as (
 
     select
         customer_id,
-        count(order_id) as orders_count,
+        round((count(order_id)/4),0) as orders_count,
         min(ordered_at) as first_order_date,
         max(ordered_at) as most_recent_order_date,
         sum(order_total) as lifetime_value
@@ -34,3 +34,4 @@ final as (
 )
 
 select * from final
+order by orders_per_customer desc
