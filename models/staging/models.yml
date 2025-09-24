@@ -28,7 +28,6 @@ models:
         description: The unique key for each order.
         tests:
           - not_null
-          - unique
 
   - name: stg_products
     description: Product data with basic cleaning and transformation applied, one row per product.

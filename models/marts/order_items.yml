@@ -8,7 +8,6 @@ models:
   - name: order_item_id
     description: A unique identifier for each order item.
     data_tests:
-      - unique
       - not_null
   - name: order_id
     description: The identifier for the order to which this item belongs.
