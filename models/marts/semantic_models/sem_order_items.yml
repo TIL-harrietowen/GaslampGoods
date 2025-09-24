@@ -101,7 +101,7 @@ metrics:
 
   - name: revenue_growth_mom
     label: "Revenue Growth MoM %"
-    description: Percentage growth of revenue completed to 1 month ago
+    description: Revenue change from one month to the next as a percentage
     type: derived
     type_params:
       expr: (revenue - rev_prev_month)*100 / rev_prev_month
@@ -113,7 +113,7 @@ metrics:
 
   - name: profit_growth_mom
     label: "Profit Growth MoM %"
-    description: Percentage growth of profit completed to 1 month ago
+    description: Profit change from one month to the next as a percentage
     type: derived
     type_params:
       expr: (profit - profit_prev_month)*100 / profit_prev_month
