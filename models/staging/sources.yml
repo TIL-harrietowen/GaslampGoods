@@ -4,25 +4,31 @@ sources:
   - name: gaslamp_goods
     database: til_us
     schema: gaslamp_goods
-    freshness: 
-      error_after:
-        count: 365
-        period: day
-      warn_after:
-        count: 182
-        period: day
-    
     tables:
       - name: raw_customers
         description: Source table containing Customer ID and name.
-        tags: ['raw']
+        config:
+          tags: ['raw']
       - name: raw_orders
-        tags: ['raw']
+        config:
+          tags: ['raw']
       - name: raw_items
-        tags: ['raw']
+        config:
+          tags: ['raw']
       - name: raw_products
-        tags: ['raw']
+        config:
+          tags: ['raw']
       - name: raw_stores
-        tags: ['raw']
+        config:
+          tags: ['raw']
       - name: raw_supplies
-        tags: ['raw']
+        config:
+          tags: ['raw']
+    config:
+      freshness:
+        error_after:
+          count: 365
+          period: day
+        warn_after:
+          count: 182
+          period: day
