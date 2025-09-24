@@ -9,7 +9,7 @@ with days as (
     {{
         dbt.date_spine(
             'day',
-            "to_date('10/01/2024','mm/dd/yyyy')",
+            "to_date('12/01/2023','mm/dd/yyyy')",
             "to_date('01/01/2025','mm/dd/yyyy')"
         )
     }}
