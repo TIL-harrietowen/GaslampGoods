@@ -1,3 +1,10 @@
+{{
+    config(
+        materialization ="incremental",
+        incremental_strategy ="append"
+    )
+}}
+
 with
 
 orders as (
