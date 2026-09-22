@@ -1,9 +1,9 @@
 exposures:
-  - name: gaslampgoods
+  - name: Gaslamp Goods Product Sales Overview
     type: dashboard
     maturity: high
     url: https://tableauserver.theinformationlab.co.uk/#/site/til2/views/GaslampGoods/GASLAMPGOODS?:iid=2
-    description: '{{ doc("exposure_details") }}'
+    description: '{{ doc("gaslampgoods_exposure") }}'
     owner:
       name: Harriet Owen
       email: harriet.owen@theinformationlab.com
