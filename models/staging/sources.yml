@@ -4,6 +4,10 @@ sources:
   - name: gaslamp_goods
     database: til_us
     schema: gaslamp_goods
+    config:
+      freshness:
+        warn_after: {count: 665, period: day}
+        error_after: {count: 670, period: day}
     tables:
       - name: raw_customers
         description: Source table containing Customer ID and name.
@@ -12,9 +16,15 @@ sources:
       - name: raw_orders
         config:
           tags: ['raw']
+          freshness:
+            warn_after: {count: 100, period: day}
+            error_after: {count: 105, period: day}
       - name: raw_items
         config:
           tags: ['raw']
+          freshness:
+            warn_after: {count: 500, period: day}
+            error_after: {count: 800, period: day}
       - name: raw_products
         config:
           tags: ['raw']
@@ -24,11 +34,3 @@ sources:
       - name: raw_supplies
         config:
           tags: ['raw']
-    config:
-      freshness:
-        error_after:
-          count: 365
-          period: day
-        warn_after:
-          count: 182
-          period: day
