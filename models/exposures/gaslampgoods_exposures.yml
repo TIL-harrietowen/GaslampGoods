@@ -1,5 +1,5 @@
 exposures:
-  - name: Gaslamp Goods Product Sales Overview
+  - name: gaslampgoods_product_sales_overview
     type: dashboard
     maturity: high
     url: https://tableauserver.theinformationlab.co.uk/#/site/til2/views/GaslampGoods/GASLAMPGOODS?:iid=2
